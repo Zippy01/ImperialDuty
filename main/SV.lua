@@ -221,6 +221,8 @@ if external then
 RegisterNetEvent("Imperial:AddUnitOnDutyExternal")
 AddEventHandler("Imperial:AddUnitOnDutyExternal", function(serverId, job)
 
+    local job = job or "Unkown"
+
     table.insert(OnDutyUnits, serverId)
 
     if job == "LEO" then
@@ -234,6 +236,8 @@ end)
 
 RegisterNetEvent("Imperial:RemoveUnitOnDutyExternal")
 AddEventHandler("Imperial:RemoveUnitOnDutyExternal", function(serverId, job)
+
+    local job = job or "Unkown"
     
     for i, unitId in ipairs(OnDutyUnits) do
 

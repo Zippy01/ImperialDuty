@@ -9,7 +9,11 @@ local serverId = PlayerId()
 
 local weapons = {}
 
-TriggerEvent('chat:addSuggestion', '/duty', 'Toggle your duty status for direct notifications', {
+local external = Config.External or false
+
+if not external then
+
+TriggerEvent('chat:addSuggestion', '/duty', 'Toggle your duty status for better ImperialCAD notifications', {
     { name="JOB", help="Specify the job you want to go on-duty as or blank for off duty" },
 })
 
@@ -54,6 +58,8 @@ RegisterCommand("duty", function(source, args)
 
     end
 end, false)
+
+end
 
 local blips = {}
 

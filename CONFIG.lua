@@ -1,5 +1,6 @@
 Config = {} -- Don't touch this line
 
+Config.External = false -- Enabling this basically just listens for its events to mark users duty for in-game notis and prevents our command from registering
 
 Config.GiveLEOWeapons = true -- If you want to give weapons to the players who go on duty as LEO
 

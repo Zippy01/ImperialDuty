@@ -5,11 +5,13 @@ local OnDutyFireUnits = {}
 local sendWebhook = Config.SendWebhook
 local webhookURL = Config.WebhookURL
 
+local external = Config.External or false
+
 RegisterNetEvent("Imperial:AddUnitOnDuty")
 AddEventHandler("Imperial:AddUnitOnDuty", function(job)
     local serverId = source
     table.insert(OnDutyUnits, serverId)
-    local jobName = "Unkown" 
+    local jobName = "Unkown"
 
     if job == "LEO" then
         table.insert(OnDutyLEOUnits, serverId)
@@ -212,6 +214,60 @@ function PrintTable(tbl)
     for k, v in pairs(tbl) do
         print(k, v)
     end
+end
+
+if external then
+
+RegisterNetEvent("Imperial:AddUnitOnDutyExternal")
+AddEventHandler("Imperial:AddUnitOnDutyExternal", function(serverId, job)
+
+    table.insert(OnDutyUnits, serverId)
+
+    if job == "LEO" then
+        table.insert(OnDutyLEOUnits, serverId)
+    elseif job == "FIRE" then
+        table.insert(OnDutyFireUnits, serverId)
+    end
+
+    print("Added to OnDuty Units: "..GetPlayerName(serverId).." Job: "..job)
+end)
+
+RegisterNetEvent("Imperial:RemoveUnitOnDutyExternal")
+AddEventHandler("Imperial:RemoveUnitOnDutyExternal", function(serverId, job)
+    
+    for i, unitId in ipairs(OnDutyUnits) do
+
+        if unitId == serverId then
+            table.remove(OnDutyUnits, i)
+            break
+        end
+
+    end
+
+    if job == "LEO" then
+
+        for i, unitId in ipairs(OnDutyLEOUnits) do
+            if unitId == serverId then
+                table.remove(OnDutyLEOUnits, i)
+                break
+            end
+        end
+
+    elseif job == "FIRE" then
+
+        for i, unitId in ipairs(OnDutyFireUnits) do
+            if unitId == serverId then
+                table.remove(OnDutyFireUnits, i)
+                break
+            end
+        end
+
+    end
+
+    print("Removed from OnDuty Units: " .. GetPlayerName(serverId))
+
+end)
+
 end
 
 exports('GetOnDutyUnits', GetOnDutyUnits)
